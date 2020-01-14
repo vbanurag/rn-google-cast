@@ -1,5 +1,7 @@
 package com.reactlibrary;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,11 +15,13 @@ import com.facebook.react.bridge.JavaScriptModule;
 public class RnGoogleCastPackage implements ReactPackage {
     @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return null;
+        return Collections.emptyList();
     }
 
+    @NonNull
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+
         return Arrays.<NativeModule>asList(new RnGoogleCastModule(reactContext));
     }
 
