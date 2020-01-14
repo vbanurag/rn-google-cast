@@ -8,20 +8,20 @@
  * https://github.com/facebook/react-native
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import RnGoogleCast from 'rn-google-cast';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   state = {
     status: 'starting',
-    message: '--'
+    message: '--',
   };
   componentDidMount() {
-    RnGoogleCast.sampleMethod('Testing', 123, (message) => {
+    RnGoogleCast.sampleMethod('Testing9', 123, message => {
       this.setState({
         status: 'native callback received',
-        message
+        message,
       });
     });
   }
