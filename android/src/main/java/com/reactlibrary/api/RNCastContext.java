@@ -36,10 +36,6 @@ public class RNCastContext extends ReactContextBaseJavaModule implements Lifecyc
 
     @Override
     public String getName() {
-<<<<<<< HEAD
         return REACT_CLASS;
-=======
-        return null;
->>>>>>> b876837ae5c25ca6de0b906f6489b6735a254e14
     }
 }
