@@ -9,29 +9,113 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import RnGoogleCast from 'rn-google-cast';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  NativeModules,
+  TouchableOpacity,
+} from 'react-native';
+import RnGoogleCast, {CastButton} from 'rn-google-cast';
+import EventEmitter from './src/events';
 
 export default class App extends Component {
   state = {
     status: 'starting',
     message: '--',
+    connected: false,
   };
+  setConnected = data => {
+    this.setState({connected: data === 'Connected'});
+  };
+
+  componentWillUnmount() {
+    this.ec.remove();
+  }
+
   componentDidMount() {
-    RnGoogleCast.sampleMethod('Testing9', 123, message => {
-      this.setState({
-        status: 'native callback received',
-        message,
-      });
+    this.ec = EventEmitter.addListener(
+      RnGoogleCast.CAST_STATE_CHANGED,
+      state => {
+        const data = [
+          'NoDevicesAvailable',
+          'NotConnected',
+          'Connecting',
+          'Connected',
+        ][state.playerState];
+        console.log(data);
+        this.setConnected(data);
+      },
+    );
+
+    RnGoogleCast.getCastState().then(state => {
+      const data = [
+        'NoDevicesAvailable',
+        'NotConnected',
+        'Connecting',
+        'Connected',
+      ][state];
+      console.log(data);
     });
   }
+
+  expand = () => {
+    RnGoogleCast.launchExpandedControls();
+  };
+
+  getDevice = async () => {
+    const data = await RnGoogleCast.getCastDevice();
+    console.log(data);
+  };
+
+  cast = () => {
+    RnGoogleCast.castMedia({
+      mediaUrl:
+        'https://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/mp4/BigBuckBunny.mp4',
+      imageUrl:
+        'https://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/images/480x270/BigBuckBunny.jpg',
+      title: 'Big Buck Bunny',
+      subtitle:
+        'A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.',
+      studio: 'Blender Foundation',
+      streamDuration: 596, // seconds
+      contentType: 'video/mp4', // Optional, default is "video/mp4"
+      playPosition: 10, // seconds
+      customData: {
+        // Optional, your custom object that will be passed to as customData to receiver
+        customKey: 'customValue',
+      },
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>☆RnGoogleCast example☆</Text>
-        <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
-        <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
-        <Text style={styles.instructions}>{this.state.message}</Text>
+        <Text style={styles.instructions}>
+          IS CONNECTED: {this.state.connected.toString()}
+        </Text>
+
+        <CastButton style={styles.castButton} />
+
+        {this.state.connected && (
+          <TouchableOpacity onPress={this.cast} style={styles.button}>
+            <Text style={styles.buttonLabel}>Cast Video Demo</Text>
+          </TouchableOpacity>
+        )}
+
+        {this.state.connected && (
+          <TouchableOpacity onPress={this.expand} style={styles.button}>
+            <Text style={styles.buttonLabel}>Expanded Controls</Text>
+          </TouchableOpacity>
+        )}
+
+        {this.state.connected && (
+          <TouchableOpacity onPress={this.getDevice} style={styles.button}>
+            <Text style={styles.buttonLabel}>Show Cast Device Info</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
@@ -43,6 +127,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  button: {
+    borderRadius: 10,
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: '#4e8',
+  },
+  buttonLabel: {
+    color: '#FFF',
+    fontWeight: '600',
+  },
+  castButton: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#463589',
+    tintColor: '#fff',
+    borderRadius: 80,
   },
   welcome: {
     fontSize: 20,

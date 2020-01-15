@@ -1,24 +1,24 @@
 {
   "name": "rn-google-cast",
-  "title": "Rn Google Cast",
-  "version": "1.0.0",
-  "description": "TODO",
+  "title": "React Native Google Cast",
+  "version": "0.5.0",
+  "description": "React Native library to use Google Cast",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "run:example": "cd example && npx react-native run-android"
+    "prerun:example": "cd example && rimraf yarn.lock node_modules && yarn",
+    "run:example": "cd example && yarn android:dev"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/rn-google-cast.git",
-    "baseUrl": "https://github.com/github_account/rn-google-cast"
+    "url": "git+https://github.com/b3coded/rn-google-cast.git",
+    "baseUrl": "https://github.com/b3coded/rn-google-cast"
   },
   "keywords": [
     "react-native"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "João Alves",
+    "email": "joaoalvs.tec@gmail.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "react": "^16.8.3",
-    "react-native": "^0.59.10"
+    "react-native": "^0.59.10",
+    "rimraf": "^3.0.0"
   }
 }

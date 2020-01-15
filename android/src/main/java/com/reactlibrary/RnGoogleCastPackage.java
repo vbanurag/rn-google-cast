@@ -2,6 +2,7 @@ package com.reactlibrary;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,9 +12,9 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
+import com.reactlibrary.components.RNGoogleCastButton;
 
 public class RnGoogleCastPackage implements ReactPackage {
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
@@ -21,12 +22,17 @@ public class RnGoogleCastPackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+        List<NativeModule> modules = new ArrayList<>();
+        modules.add(new RnGoogleCastModule(reactContext));
 
-        return Arrays.<NativeModule>asList(new RnGoogleCastModule(reactContext));
+        return modules;
     }
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+        List<ViewManager> managers = new ArrayList<>();
+        managers.add(new RNGoogleCastButton());
+
+        return managers;
     }
 }
