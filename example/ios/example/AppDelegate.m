@@ -10,6 +10,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <GoogleCast/GoogleCast.h>
 
 @implementation AppDelegate
 
@@ -27,6 +28,13 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  GCKDiscoveryCriteria *criteria = [[GCKDiscoveryCriteria alloc] initWithApplicationID:kGCKDefaultMediaReceiverApplicationID];
+  GCKCastOptions* options = [[GCKCastOptions alloc] initWithDiscoveryCriteria:criteria];
+  options.physicalVolumeButtonsWillControlDeviceVolume = YES; // add this row
+  [GCKCastContext setSharedInstanceWithOptions:options];
+
+  [GCKCastContext sharedInstance].useDefaultExpandedMediaControls = YES;
   return YES;
 }
 

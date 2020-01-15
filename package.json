@@ -5,8 +5,9 @@
   "description": "React Native library to use Google Cast",
   "main": "index.js",
   "scripts": {
-    "prerun:example": "cd example && rimraf yarn.lock node_modules && yarn",
-    "run:example": "cd example && yarn android:dev"
+    "clean:modules": "cd example && rimraf yarn.lock node_modules && yarn",
+    "pod":"cd example/ios && pod install",
+    "run:example": "npm run clean:modules && cd example && yarn android:dev"
   },
   "repository": {
     "type": "git",
