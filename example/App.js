@@ -27,7 +27,7 @@ export default class App extends Component {
     connected: false,
   };
   setConnected = data => {
-    this.setState({connected: data === 'Connected'});
+    this.setState({connected: data === 'connected'});
   };
 
   componentWillUnmount() {
@@ -38,6 +38,7 @@ export default class App extends Component {
     this.ec = EventEmitter.addListener(
       RnGoogleCast.CAST_STATE_CHANGED,
       state => {
+        console.log(state);
         const data = [
           'NoDevicesAvailable',
           'NotConnected',
@@ -45,18 +46,13 @@ export default class App extends Component {
           'Connected',
         ][state.playerState];
         console.log(data);
-        this.setConnected(data);
+        this.setConnected(state);
       },
     );
 
     RnGoogleCast.getCastState().then(state => {
-      const data = [
-        'NoDevicesAvailable',
-        'NotConnected',
-        'Connecting',
-        'Connected',
-      ][state];
-      console.log(data);
+      
+      console.log(state);
     });
   }
 

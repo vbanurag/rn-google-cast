@@ -1,5 +1,5 @@
-#import <GoogleCast/GoogleCast.h>
 #import "RnGoogleCast.h"
+#import "types/RCTConvert+GCKCastState.m"
 
 #import <React/RCTBridge.h>
 #import <React/RCTConvert.h>
@@ -26,6 +26,14 @@ RCT_EXPORT_MODULE();
 - (instancetype)init {
   self = [super init];
   channels = [[NSMutableDictionary alloc] init];
+  if(self = [super init]){
+    [[NSNotificationCenter defaultCenter]
+      addObserver:self
+        selector:@selector(castDeviceDidChange:)
+        name:kGCKCastStateDidChangeNotification
+        object:[GCKCastContext sharedInstance]];
+  }
+  
   return self;
 }
 
@@ -272,6 +280,15 @@ RCT_EXPORT_METHOD(setVolume : (float)volume) {
     if (castSession) {
         [castSession.remoteMediaClient setStreamVolume:volume];
     }
+}
+
+#pragma mark - GCKDiscoveryManager listener events
+// TODO
+-(void)castDeviceDidChange:(NSNotification *)notification {
+  if(!hasListeners) return;
+
+  GCKCastState state = [GCKCastContext sharedInstance].castState;
+  [self sendEventWithName:CAST_STATE_CHANGED body:[RCTConvert fromGCKCastState:state]];
 }
 
 #pragma mark - GCKSessionManagerListener events

@@ -224,6 +224,9 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
+  - rn-google-cast (0.5.0):
+    - React
+    - rn-google-cast/NoBluetooth (= 0.5.0)
   - rn-google-cast/NoBluetooth (0.5.0):
     - google-cast-sdk-no-bluetooth
     - React
@@ -261,7 +264,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - rn-google-cast/NoBluetooth (from `../node_modules/rn-google-cast`)
+  - rn-google-cast (from `../node_modules/rn-google-cast`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -357,6 +360,6 @@ SPEC CHECKSUMS:
   rn-google-cast: 0b1a897508521e79da58efd7c9e2e74e6b939380
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: a95c3b7890006c87fed248cc78f675848cfde49f
+PODFILE CHECKSUM: 87eac9b4af4ac4e7050be889d9d3b56986cad63b
 
 COCOAPODS: 1.8.4

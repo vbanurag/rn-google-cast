@@ -1,7 +1,7 @@
 #import <GoogleCast/GoogleCast.h>
-#import "RnGoogleCastButton.h"
+#import "RnCastButton.h"
 
-@implementation RnGoogleCastButton
+@implementation RnCastButton
 {
   GCKUICastButton *_castButton;
   UIColor *_tintColor;

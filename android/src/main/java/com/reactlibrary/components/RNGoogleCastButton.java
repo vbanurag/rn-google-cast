@@ -17,7 +17,7 @@ import com.google.android.gms.cast.framework.CastStateListener;
 
 public class RNGoogleCastButton
         extends SimpleViewManager<MediaRouteButton> {
-    public static final String REACT_CLASS = "RNCastButton";
+    public static final String REACT_CLASS = "RnCastButton";
 
     private Integer mColor = null;
     private static MediaRouteButton googleCastButtonManagerInstance;
