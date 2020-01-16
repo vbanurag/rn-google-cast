@@ -1,19 +1,7 @@
-import {
-    DeviceEventEmitter,
-    NativeEventEmitter,
-    NativeModules,
-    Platform,
-    requireNativeComponent
-  } from 'react-native';
-  
-const { RnGoogleCast } = NativeModules;
+import RnGoogleCast from "./lib/CastContext";
+import CastButton from "./lib/CastButton";
+import EventEmitter from "./lib/EventEmitter";
+import Constants from "./lib/Constants";
 
-export const CastButton = requireNativeComponent("RnCastButton");
-
-export const EventEmitter =
-    Platform.OS === 'ios'
-      ? new NativeEventEmitter(RnGoogleCast)
-      : DeviceEventEmitter;
-
-
+export { CastButton, EventEmitter, Constants };
 export default RnGoogleCast;

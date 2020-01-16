@@ -111,6 +111,12 @@ public class RnGoogleCastModule extends ReactContextBaseJavaModule implements Li
         }
     }
 
+    public void emitStringToRN(String eventName, String event){
+        getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, event);
+    }
+
     public void emitMessageToRN(String eventName,
                                 @Nullable WritableMap params) {
         getReactApplicationContext()
@@ -164,6 +170,7 @@ public class RnGoogleCastModule extends ReactContextBaseJavaModule implements Li
     @ReactMethod
     public void sampleMethod(String stringArgument, int numberArgument, Callback callback) {
         // TODO: Implement some actually useful functionality
+        // the meme
         callback.invoke("Received numberArgument: " + numberArgument + " stringArgument: " + stringArgument);
     }
 
@@ -195,7 +202,8 @@ public class RnGoogleCastModule extends ReactContextBaseJavaModule implements Li
                 if (CAST_AVAILABLE) {
                     CastContext castContext =
                             CastContext.getSharedInstance(reactContext);
-                    promise.resolve(castContext.getCastState() - 1);
+                    int state = castContext.getCastState();
+                    promise.resolve( toCastState(state));
                 } else {
                     promise.reject(E_CAST_NOT_AVAILABLE, GOOGLE_CAST_NOT_AVAILABLE_MESSAGE);
                 }
@@ -391,9 +399,7 @@ public class RnGoogleCastModule extends ReactContextBaseJavaModule implements Li
         mCastStateListener = new CastStateListener() {
             @Override
             public void onCastStateChanged(int newState) {
-                // TODO: Implement onCastStateChanged
-                Log.w("CAST_STATE_CHANGED:", "" + (newState - 1));
-                emitMessageToRN(CAST_STATE_CHANGED, transformValue(newState - 1));
+                emitStringToRN(CAST_STATE_CHANGED, toCastState(newState));
             }
         };
 
@@ -405,6 +411,24 @@ public class RnGoogleCastModule extends ReactContextBaseJavaModule implements Li
         }
     }
 
+    private String toCastState(int state){
+        String message = "noDevicesAvailable";
+        switch (state){
+            case CastState.CONNECTED:
+                message= "connected";
+                break;
+            case CastState.NOT_CONNECTED:
+                message = "notConnected";
+                break;
+            case CastState.CONNECTING:
+                message = "connecting";
+                break;
+            default:
+                message = "noDevicesAvailable";
+                break;
+        }
+        return message;
+    }
     private WritableMap transformValue(int value) {
         WritableMap map = Arguments.createMap();
         map.putInt("playerState", value);

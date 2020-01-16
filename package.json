@@ -1,12 +1,12 @@
 {
   "name": "rn-google-cast",
   "title": "React Native Google Cast",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "React Native library to use Google Cast",
   "main": "index.js",
   "scripts": {
     "clean:modules": "cd example && rimraf yarn.lock node_modules && yarn",
-    "pod":"cd example/ios && pod install",
+    "pod": "cd example/ios && pod install",
     "run:example": "npm run clean:modules && cd example && yarn android:dev"
   },
   "repository": {
@@ -15,7 +15,9 @@
     "baseUrl": "https://github.com/b3coded/rn-google-cast"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "google-cast",
+    "google-cast-sdk"
   ],
   "author": {
     "name": "João Alves",

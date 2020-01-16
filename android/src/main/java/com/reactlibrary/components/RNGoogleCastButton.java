@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.mediarouter.app.MediaRouteButton;
 
+import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.google.android.gms.cast.framework.CastButtonFactory;
@@ -51,6 +52,14 @@ public class RNGoogleCastButton
         });
 
         return button;
+    }
+
+    @ReactProp(name = "tintColor", customType = "Color")
+    public void setTintColor(ColorableMediaRouteButton button, Integer color) {
+        if (color == null)
+            return;
+        button.applyTint(color);
+        mColor = color;
     }
 
 

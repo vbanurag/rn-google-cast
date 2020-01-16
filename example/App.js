@@ -17,17 +17,15 @@ import {
   NativeModules,
   TouchableOpacity,
 } from 'react-native';
-import RnGoogleCast, {CastButton} from 'rn-google-cast';
-import EventEmitter from './src/events';
+import RnGoogleCast, {
+  CastButton,
+  EventEmitter,
+  Constants,
+} from 'rn-google-cast';
 
 export default class App extends Component {
   state = {
-    status: 'starting',
-    message: '--',
     connected: false,
-  };
-  setConnected = data => {
-    this.setState({connected: data === 'connected'});
   };
 
   componentWillUnmount() {
@@ -35,26 +33,18 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.ec = EventEmitter.addListener(
-      RnGoogleCast.CAST_STATE_CHANGED,
-      state => {
-        console.log(state);
-        const data = [
-          'NoDevicesAvailable',
-          'NotConnected',
-          'Connecting',
-          'Connected',
-        ][state.playerState];
-        console.log(data);
-        this.setConnected(state);
-      },
-    );
-
     RnGoogleCast.getCastState().then(state => {
-      
-      console.log(state);
+      this.setConnected(state);
+    });
+    this.ec = EventEmitter.addListener(Constants.CAST_STATE_CHANGED, state => {
+      this.setConnected(state);
     });
   }
+
+  setConnected = data => {
+    const connected = data === 'connected';
+    this.setState({connected});
+  };
 
   expand = () => {
     RnGoogleCast.launchExpandedControls();
@@ -66,6 +56,9 @@ export default class App extends Component {
   };
 
   cast = () => {
+    // on IOS is REQUIRED to use all this props
+    // optional props on IOS will be fixed later
+
     RnGoogleCast.castMedia({
       mediaUrl:
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/mp4/BigBuckBunny.mp4',
@@ -76,21 +69,22 @@ export default class App extends Component {
         'A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.',
       studio: 'Blender Foundation',
       streamDuration: 596, // seconds
-      contentType: 'video/mp4', // Optional, default is "video/mp4"
+      contentType: 'video/mp4', // default is "video/mp4" on Android
       playPosition: 10, // seconds
       customData: {
-        // Optional, your custom object that will be passed to as customData to receiver
+        // your custom object that will be passed to as customData to receiver
         customKey: 'customValue',
       },
     });
   };
 
   render() {
+    const message = this.state.connected ? 'YES' : 'NO';
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>☆RnGoogleCast example☆</Text>
         <Text style={styles.instructions}>
-          IS CONNECTED: {this.state.connected.toString()}
+          Is connected to ChromeCast?: {message}
         </Text>
 
         <CastButton style={styles.castButton} />
@@ -138,8 +132,12 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     backgroundColor: '#463589',
-    tintColor: '#fff',
-    borderRadius: 80,
+    tintColor: 'white',
+    color: '#fff',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   welcome: {
     fontSize: 20,
