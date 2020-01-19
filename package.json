@@ -1,13 +1,14 @@
 {
   "name": "rn-google-cast",
   "title": "React Native Google Cast",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native library to use Google Cast",
   "main": "index.js",
   "scripts": {
     "clean:modules": "cd example && rimraf yarn.lock node_modules && yarn",
     "pod": "cd example/ios && pod install",
-    "run:example": "npm run clean:modules && cd example && yarn android:dev"
+    "run:example": "npm run clean:modules && cd example && yarn android:dev",
+    "lint:fix": "eslint index.js lib/** --fix"
   },
   "repository": {
     "type": "git",
@@ -16,8 +17,11 @@
   },
   "keywords": [
     "react-native",
+    "android",
+    "ios",
     "google-cast",
-    "google-cast-sdk"
+    "google-cast-sdk",
+    "chromecast"
   ],
   "author": {
     "name": "João Alves",
@@ -31,6 +35,13 @@
     "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "7.14.3",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
     "react": "^16.8.3",
     "react-native": "^0.59.10",
     "rimraf": "^3.0.0"
