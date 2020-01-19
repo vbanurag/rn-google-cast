@@ -1,4 +1,5 @@
 # React Native Google Cast
+[![version](https://img.shields.io/badge/version-1.0.1-green.svg)](https://semver.org)
 
 A React Native library to use Google Cast, based on [react-native-google-cast](https://github.com/react-native-google-cast/react-native-google-cast)
 
