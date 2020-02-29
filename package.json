@@ -3,17 +3,15 @@
   "title": "React Native Google Cast",
   "version": "1.0.1",
   "description": "React Native library to use Google Cast",
-  "main": "index.js",
+  "main": "lib/index",
+  "types": "./lib/index",
   "scripts": {
+    "prepublish": "tsc",
+    "postpublish": "rimraf lib/**/*.js lib/**/*.d.ts",
     "clean:modules": "cd example && rimraf yarn.lock node_modules && yarn",
     "pod": "cd example/ios && pod install",
     "run:example": "npm run clean:modules && cd example && yarn android:dev",
-    "lint:fix": "eslint index.js lib/** --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/b3coded/rn-google-cast.git",
-    "baseUrl": "https://github.com/b3coded/rn-google-cast"
+    "lint:fix": "eslint lib/** --ext .js,.jsx,.ts,.tsx --fix"
   },
   "keywords": [
     "react-native",
@@ -23,6 +21,11 @@
     "google-cast-sdk",
     "chromecast"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b3coded/rn-google-cast.git",
+    "baseUrl": "https://github.com/b3coded/rn-google-cast"
+  },
   "author": {
     "name": "João Alves",
     "email": "joaoalvs.tec@gmail.com"
@@ -32,18 +35,23 @@
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "^16.8.1",
-    "react-native": ">=0.59.0-rc.0 <1.0.x"
+    "react-native": ">=0.60.0 <1.0.x"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "7.14.3",
+    "@react-native-community/eslint-config": "^0.0.7",
+    "@types/react": "^16.9.23",
+    "@types/react-native": "^0.61.17",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import-helpers": "^1.0.2",
+    "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.0.10",
     "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
     "react": "^16.8.3",
-    "react-native": "^0.59.10",
-    "rimraf": "^3.0.0"
+    "react-native": "^0.60.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
   }
 }
